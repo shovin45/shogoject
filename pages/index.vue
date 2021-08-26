@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="box">
-      <h1 class="main-title animate__animated animate__backInDown">
+      <h1
+        class="
+          main-title
+          animate__animated animate__backInDown animate__delay-1s
+        "
+      >
         <Logo />
       </h1>
       <h2 class="main-title animate__animated animate__backInUp">
@@ -11,7 +16,10 @@
         <ul class="nav-menu">
           <li v-for="(text, key) in buttons" :key="key">
             <nuxt-link
-              class="links animate__animated animate__fadeInBottomLeft"
+              class="
+                links
+                animate__animated animate__fadeInBottomLeft animate__delay-2s
+              "
               :to="key"
             >
               {{ text }}
@@ -19,7 +27,9 @@
           </li>
         </ul>
       </nav>
-      <ul class="sns-list animate__animated animate__backInUp">
+      <ul
+        class="sns-list animate__animated animate__backInUp animate__delay-3s"
+      >
         <li v-for="(sns, key) in snsLists" :key="key">
           <a :href="sns.link" target="_blank">
             <img :src="sns.icon" :alt="key" />
@@ -31,33 +41,52 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Logo from '~/components/Logo.vue'
+import { defineComponent, reactive } from '@vue/composition-api'
+import Logo from '@/components/Logo.vue'
 
-export default Vue.extend({
+interface Buttons {
+  portfolio: string
+  profile: string
+}
+
+interface SnsList {
+  link: string
+  icon: (url: string) => any
+}
+
+interface SnsLists {
+  twitter: SnsList
+  instagram: SnsList
+  facebook: SnsList
+}
+
+export default defineComponent({
   components: {
     Logo,
   },
-  data() {
+  setup() {
+    const buttons = reactive<Buttons>({
+      portfolio: 'ポートフォリオ',
+      profile: 'プロフィール',
+    })
+    const snsLists = reactive<SnsLists>({
+      twitter: {
+        link: 'https://twitter.com/shogogo45',
+        icon: require('@/assets/icon-twitter-black.svg'),
+      },
+      instagram: {
+        link: 'https://www.instagram.com/shovin_45/',
+        icon: require('@/assets/icon-instagram-black.svg'),
+      },
+      facebook: {
+        link: 'https://www.facebook.com/shogo.yasumura',
+        icon: require('@/assets/icon-facebook-black.svg'),
+      },
+    })
+
     return {
-      buttons: {
-        portfolio: 'ポートフォリオ',
-        profile: 'プロフィール',
-      },
-      snsLists: {
-        twitter: {
-          link: 'https://twitter.com/shogogo45',
-          icon: require('@/assets/icon-twitter-black.svg'),
-        },
-        instagram: {
-          link: 'https://www.instagram.com/shovin_45/',
-          icon: require('@/assets/icon-instagram-black.svg'),
-        },
-        facebook: {
-          link: 'https://www.facebook.com/shogo.yasumura',
-          icon: require('@/assets/icon-facebook-black.svg'),
-        },
-      },
+      buttons,
+      snsLists,
     }
   },
 })

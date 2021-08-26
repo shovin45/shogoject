@@ -2,7 +2,7 @@
   <div>
     <Nuxt />
     <footer class="footer">
-      <p>
+      <p v-if="$route.name != 'index'">
         <nuxt-link class="footer-link" to="/">トップに戻る</nuxt-link>
       </p>
       <small>Created by Shogo Yasumrua</small>
